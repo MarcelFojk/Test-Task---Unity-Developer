@@ -59,7 +59,11 @@ namespace MeshGeneration
                             _vertexMap[point] = _vertices.Count;
                             _vertices.Add(point);
                             _normals.Add(point);
-                            _uvs.Add(new Vector2((float)x / resolution, (float)y / resolution));
+
+                            Vector3 normal = point.normalized;
+                            float u = 0.5f + Mathf.Atan2(normal.z, normal.x) / (2f * Mathf.PI);
+                            float v = 0.5f - Mathf.Asin(normal.y) / Mathf.PI;
+                            _uvs.Add(new Vector2(u, v));
                         }
 
                         vertexIndices[x, y] = _vertexMap[point];
@@ -87,7 +91,7 @@ namespace MeshGeneration
             }
 
             // Cone
-            Vector3 coneTip = Vector3.forward * (size / 2f + 1f);
+            Vector3 coneTip = Vector3.forward * (size / 2f + 0.7f);
             int tipIndex = _vertices.Count;
             _vertices.Add(coneTip);
             _normals.Add(Vector3.forward);
@@ -101,7 +105,7 @@ namespace MeshGeneration
                 float x = Mathf.Cos(angle);
                 float y = Mathf.Sin(angle);
                 Vector3 dir = new Vector3(x, y, 0);
-                Vector3 basePoint = dir * (size / 2f);
+                Vector3 basePoint = dir * (size / 4f);
 
                 int baseIndex = _vertices.Count;
                 _vertices.Add(basePoint);

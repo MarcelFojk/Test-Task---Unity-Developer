@@ -65,10 +65,10 @@ namespace Animation
 
             if (_timeForNewParameters <= 0)
             {
-                _amplitudeXgoal = Random.Range(0.5f, 1.5f);
-                _amplitudeYgoal = Random.Range(0.5f, 1.5f);
-                _frequencyXgoal = Random.Range(0.3f, 1f);
-                _frequencyYgoal = Random.Range(0.3f, 1f);
+                _amplitudeXgoal = Random.Range(0.7f, 2f);
+                _amplitudeYgoal = Random.Range(0.7f, 2f);
+                _frequencyXgoal = Random.Range(0.4f, 1f);
+                _frequencyYgoal = Random.Range(0.4f, 1f);
 
                 _amplitudeXstart = _amplitudeX;
                 _amplitudeYstart = _amplitudeY;

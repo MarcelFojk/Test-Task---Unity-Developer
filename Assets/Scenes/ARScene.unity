@@ -1121,7 +1121,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: dcdb38fcda158fc4da71e03a248c1648, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1422,6 +1422,8 @@ MonoBehaviour:
   _meshFilter: {fileID: 2003793493}
   _resolution: 22
   _size: 1
+  _objectBLocalTransform: {fileID: 531472230}
+  _objectAMaterial: {fileID: 2100000, guid: dcdb38fcda158fc4da71e03a248c1648, type: 2}
 --- !u!114 &2003793501
 MonoBehaviour:
   m_ObjectHideFlags: 0
