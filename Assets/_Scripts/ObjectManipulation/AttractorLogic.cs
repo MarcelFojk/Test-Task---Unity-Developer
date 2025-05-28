@@ -1,9 +1,7 @@
 using MixedReality.Toolkit;
 using MixedReality.Toolkit.SpatialManipulation;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -15,11 +13,6 @@ namespace ObjectManipulation
         public override void Setup(List<IXRSelectInteractor> interactors, IXRSelectInteractable interactable, MixedRealityTransform currentTarget)
         {   
             base.Setup(interactors, interactable, currentTarget);
-
-            if (interactable.transform.TryGetComponent(out Follow follow))
-            {
-                follow.IgnoreDistanceClamp = true;
-            }
 
             // tracks the end of object manipulation
             interactable.selectExited.AddListener(OnSelectExit);
@@ -35,10 +28,7 @@ namespace ObjectManipulation
 
         private void OnSelectExit(SelectExitEventArgs args)
         {
-            if (args.interactableObject.transform.TryGetComponent(out Follow follow))
-            {   
-                follow.IgnoreDistanceClamp = false;
-            }
+            args.interactableObject.transform.localPosition = Vector3.zero;
         }
     }
 }
