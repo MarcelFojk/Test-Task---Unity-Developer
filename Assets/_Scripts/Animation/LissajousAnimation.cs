@@ -30,14 +30,28 @@ namespace Animation
         private float _phaseX;
         private float _phaseY;
 
+        private bool _isPlaying = true;
+
         private void Awake()
         {
             _offsetX = Random.Range(0.0f, 1000.0f);
             _offsetY = Random.Range(0.0f, 1000.0f);
         }
 
+        public void PauseAnimation()
+        {
+            _isPlaying = false;
+        }
+
+        public void ContinueAnimation()
+        {
+            _isPlaying = true;
+        }
+
         private void Update()
         {
+            if (!_isPlaying) return;
+
             _timeForNewParameters -= Time.deltaTime;
             float t = Mathf.Clamp01(1f - _timeForNewParameters / _goalTime);
 
@@ -51,8 +65,8 @@ namespace Animation
 
             if (_timeForNewParameters <= 0)
             {
-                _amplitudeXgoal = Random.Range(0.1f, 0.4f);
-                _amplitudeYgoal = Random.Range(0.1f, 0.4f);
+                _amplitudeXgoal = Random.Range(0.5f, 1.5f);
+                _amplitudeYgoal = Random.Range(0.5f, 1.5f);
                 _frequencyXgoal = Random.Range(0.3f, 1f);
                 _frequencyYgoal = Random.Range(0.3f, 1f);
 

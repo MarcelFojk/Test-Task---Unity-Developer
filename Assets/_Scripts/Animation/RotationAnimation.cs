@@ -14,20 +14,35 @@ namespace Animation
 
         private float _angle = 0f;
 
-        private void Update()
-        {
-            _angle += _angularSpeed * Time.deltaTime;
+        private bool _isPlaying = true;
 
-            var offset = transform.position;
-            offset.x = _radius * Mathf.Cos(_angle);
-            offset.z = _radius * Mathf.Sin(_angle);
-            offset.y = 0f;
-            transform.position = offset + _localObjectB.parent.position;
+        public void PauseAnimation()
+        {
+            _isPlaying = false;
+        }
+
+        public void ContinueAnimation()
+        {
+            _isPlaying = true;
+        }
+
+        private void Update()
+        {   
+            if (_isPlaying)
+            {
+                _angle += _angularSpeed * Time.deltaTime;
+
+                var offset = transform.position;
+                offset.x = _radius * Mathf.Cos(_angle);
+                offset.z = _radius * Mathf.Sin(_angle);
+                offset.y = 0f;
+                transform.position = offset + _localObjectB.parent.position;
+            }
 
             Vector3 direction = (_localObjectB.position - _localObjectA.position).normalized;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            _localObjectA.rotation = 
+            _localObjectA.rotation =
                 Quaternion.RotateTowards(_localObjectA.rotation, targetRotation, _lookRotationSpeed * Time.deltaTime);
         }
     }
