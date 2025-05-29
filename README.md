@@ -140,6 +140,8 @@ The project is based on a **component-driven architecture**, aligning with Unity
 4. No XR device is required — MRTK3 provides full simulation via keyboard and mouse.
 
 5. Run Unitty Editor and use simulated input to test AR behaviors.
+   - **Space + left-click** to use the **right hand**.
+   - **Shift + left-click** to use the **left hand**.
 
 ---
 
