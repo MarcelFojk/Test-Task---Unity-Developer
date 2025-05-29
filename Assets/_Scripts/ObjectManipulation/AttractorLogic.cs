@@ -38,7 +38,7 @@ namespace ObjectManipulation
         }
 
         private void OnSelectExit(SelectExitEventArgs args)
-        {
+        {   
             args.interactableObject.transform.localPosition = Vector3.zero;
 
             if (args.interactableObject.transform.TryGetComponent(out LissajousAnimation animation))
@@ -50,6 +50,8 @@ namespace ObjectManipulation
             {
                 rotation.ContinueAnimation();
             }
+
+            args.interactableObject.selectExited.RemoveListener(OnSelectExit);
         }
     }
 }

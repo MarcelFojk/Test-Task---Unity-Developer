@@ -28,6 +28,7 @@ namespace Animation
 
         private void Update()
         {   
+            // rotation around ObjectB
             if (_isPlaying)
             {
                 _angle += _angularSpeed * Time.deltaTime;
@@ -39,6 +40,7 @@ namespace Animation
                 transform.position = offset + _localObjectB.parent.position;
             }
 
+            // Forward vector facing ObjectB
             Vector3 direction = (_localObjectB.position - _localObjectA.position).normalized;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);

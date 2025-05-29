@@ -39,9 +39,9 @@ namespace MeshGeneration
             {
                 int[,] vertexIndices = new int[resolution + 1, resolution + 1];
 
+                // Used to determine plane of the face using main direction
                 Vector3 planeAxisA = Vector3.Cross(_directions[i], Vector3.up);
                 if (planeAxisA == Vector3.zero) planeAxisA = Vector3.right;
-
                 Vector3 planeAxisB = Vector3.Cross(_directions[i], planeAxisA);
 
                 for (int x = 0; x < resolution + 1; x++)

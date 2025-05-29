@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b11c62eae5427468d557d1930c2a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllowerdHand: 2
+  AllowerdHand: 1
 --- !u!65 &531472227
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -635,7 +635,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.4, y: 1, z: 1.4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &531472228
 MeshRenderer:
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b11c62eae5427468d557d1930c2a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllowerdHand: 1
+  AllowerdHand: 2
 --- !u!114 &2003793500
 MonoBehaviour:
   m_ObjectHideFlags: 0
