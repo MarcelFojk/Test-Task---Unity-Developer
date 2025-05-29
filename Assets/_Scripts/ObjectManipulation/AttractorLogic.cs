@@ -1,4 +1,4 @@
-using Animation;
+using Interfaces;
 using MixedReality.Toolkit;
 using MixedReality.Toolkit.SpatialManipulation;
 using System.Collections.Generic;
@@ -18,14 +18,9 @@ namespace ObjectManipulation
             // tracks the end of object manipulation
             interactable.selectExited.AddListener(OnSelectExit);
 
-            if (interactable.transform.TryGetComponent(out LissajousAnimation animation))
+            if (interactable.transform.TryGetComponent(out IObject iobject))
             {
-                animation.PauseAnimation();
-            }
-
-            if (interactable.transform.parent.TryGetComponent(out RotationAnimation rotation))
-            {
-                rotation.PauseAnimation();
+                iobject.SetActiveAnimation(false);
             }
         }
 
@@ -41,14 +36,9 @@ namespace ObjectManipulation
         {   
             args.interactableObject.transform.localPosition = Vector3.zero;
 
-            if (args.interactableObject.transform.TryGetComponent(out LissajousAnimation animation))
+            if (args.interactableObject.transform.TryGetComponent(out IObject iobject))
             {
-                animation.ContinueAnimation();
-            }
-
-            if (args.interactableObject.transform.parent.TryGetComponent(out RotationAnimation rotation))
-            {
-                rotation.ContinueAnimation();
+                iobject.SetActiveAnimation(true);
             }
 
             args.interactableObject.selectExited.RemoveListener(OnSelectExit);

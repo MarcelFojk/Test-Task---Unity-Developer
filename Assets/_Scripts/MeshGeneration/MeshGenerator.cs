@@ -1,18 +1,11 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace MeshGeneration
 {
-    public class MeshGenerator : MonoBehaviour
+    public static class MeshGenerator
     {
-        private List<Vector3> _vertices = new();   
-        private List<Vector3> _normals = new();   
-        private List<int> _triangles = new();
-        private List<Vector2> _uvs = new();
-
-        private Vector3[] _directions = new Vector3[6]
+        private static Vector3[] _directions = new Vector3[6]
         {
             Vector3.up,
             Vector3.down,
@@ -22,15 +15,13 @@ namespace MeshGeneration
             Vector3.back,
         };
 
-        Dictionary<Vector3, int> _vertexMap = new Dictionary<Vector3, int>();
-
-        public Mesh GetCubeSphere(int resolution, float size)
+        public static Mesh GetCubeSphere(int resolution, float size)
         {
-            _vertices.Clear();
-            _normals.Clear();
-            _triangles.Clear();
-            _uvs.Clear();
-            _vertexMap.Clear();
+            List<Vector3> vertices = new();
+            List<Vector3> normals = new();
+            List<int> triangles = new();
+            List<Vector2> uvs = new();
+            Dictionary<Vector3, int> vertexMap = new();
 
             Mesh mesh = new Mesh();
             mesh.name = "CubeSphere";
@@ -54,19 +45,19 @@ namespace MeshGeneration
 
                         point = point.normalized * (size / 2f);
 
-                        if (!_vertexMap.ContainsKey(point))
+                        if (!vertexMap.ContainsKey(point))
                         {
-                            _vertexMap[point] = _vertices.Count;
-                            _vertices.Add(point);
-                            _normals.Add(point);
+                            vertexMap[point] = vertices.Count;
+                            vertices.Add(point);
+                            normals.Add(point);
 
                             Vector3 normal = point.normalized;
                             float u = 0.5f + Mathf.Atan2(normal.z, normal.x) / (2f * Mathf.PI);
                             float v = 0.5f - Mathf.Asin(normal.y) / Mathf.PI;
-                            _uvs.Add(new Vector2(u, v));
+                            uvs.Add(new Vector2(u, v));
                         }
 
-                        vertexIndices[x, y] = _vertexMap[point];
+                        vertexIndices[x, y] = vertexMap[point];
                     }
                 }
 
@@ -79,23 +70,23 @@ namespace MeshGeneration
                         int i01 = vertexIndices[x, y + 1];
                         int i11 = vertexIndices[x + 1, y + 1];
 
-                        _triangles.Add(i00);
-                        _triangles.Add(i10);
-                        _triangles.Add(i11);
+                        triangles.Add(i00);
+                        triangles.Add(i10);
+                        triangles.Add(i11);
 
-                        _triangles.Add(i00);
-                        _triangles.Add(i11);
-                        _triangles.Add(i01);
+                        triangles.Add(i00);
+                        triangles.Add(i11);
+                        triangles.Add(i01);
                     }
                 }
             }
 
             // Cone
             Vector3 coneTip = Vector3.forward * (size / 2f + 0.7f);
-            int tipIndex = _vertices.Count;
-            _vertices.Add(coneTip);
-            _normals.Add(Vector3.forward);
-            _uvs.Add(new Vector2(0.5f, 1f));
+            int tipIndex = vertices.Count;
+            vertices.Add(coneTip);
+            normals.Add(Vector3.forward);
+            uvs.Add(new Vector2(0.5f, 1f));
 
             List<int> baseIndices = new();
 
@@ -107,10 +98,10 @@ namespace MeshGeneration
                 Vector3 dir = new Vector3(x, y, 0);
                 Vector3 basePoint = dir * (size / 4f);
 
-                int baseIndex = _vertices.Count;
-                _vertices.Add(basePoint);
-                _normals.Add((basePoint - coneTip).normalized);
-                _uvs.Add(new Vector2((float)i / resolution, 0));
+                int baseIndex = vertices.Count;
+                vertices.Add(basePoint);
+                normals.Add((basePoint - coneTip).normalized);
+                uvs.Add(new Vector2((float)i / resolution, 0));
                 baseIndices.Add(baseIndex);
             }
 
@@ -119,27 +110,27 @@ namespace MeshGeneration
                 int current = baseIndices[i];
                 int next = baseIndices[(i + 1) % resolution];
 
-                _triangles.Add(tipIndex);
-                _triangles.Add(current);
-                _triangles.Add(next);
+                triangles.Add(tipIndex);
+                triangles.Add(current);
+                triangles.Add(next);
             }
 
-            mesh.SetVertices(_vertices);
-            mesh.SetNormals(_normals);
-            mesh.SetUVs(0, _uvs);
-            mesh.SetTriangles(_triangles, 0);
+            mesh.SetVertices(vertices);
+            mesh.SetNormals(normals);
+            mesh.SetUVs(0, uvs);
+            mesh.SetTriangles(triangles, 0);
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
 
             return mesh;
         }
 
-        public Mesh GetTorus(int mainAngleResolution, int sectionResolution, float tubeRadius, float mainRadius)
+        public static Mesh GetTorus(int mainAngleResolution, int sectionResolution, float tubeRadius, float mainRadius)
         {
-            _vertices.Clear();
-            _normals.Clear();
-            _triangles.Clear();
-            _uvs.Clear();
+            List<Vector3> vertices = new();
+            List<Vector3> normals = new();
+            List<int> triangles = new();
+            List<Vector2> uvs = new();
 
             Mesh mesh = new Mesh();
             mesh.name = "Torus";
@@ -163,10 +154,10 @@ namespace MeshGeneration
                     tubeRadius * Mathf.Sin(torusAngle),
                     (mainRadius + tubeRadius * Mathf.Cos(torusAngle)) * Mathf.Sin(mainAngle));
 
-                    vertexIndices[i, j] = _vertices.Count;
-                    _vertices.Add(point);
-                    _normals.Add((point - midPoint).normalized);
-                    _uvs.Add(new Vector2((float)i / mainAngleResolution, (float)j / sectionResolution));
+                    vertexIndices[i, j] = vertices.Count;
+                    vertices.Add(point);
+                    normals.Add((point - midPoint).normalized);
+                    uvs.Add(new Vector2((float)i / mainAngleResolution, (float)j / sectionResolution));
                 }
 
             }
@@ -184,20 +175,20 @@ namespace MeshGeneration
                     int i01 = vertexIndices[i, nextJ];
                     int i11 = vertexIndices[nextI, nextJ];
 
-                    _triangles.Add(i00);
-                    _triangles.Add(i11);
-                    _triangles.Add(i10);
+                    triangles.Add(i00);
+                    triangles.Add(i11);
+                    triangles.Add(i10);
 
-                    _triangles.Add(i00);
-                    _triangles.Add(i01);
-                    _triangles.Add(i11);
+                    triangles.Add(i00);
+                    triangles.Add(i01);
+                    triangles.Add(i11);
                 }
             }
 
-            mesh.SetVertices(_vertices);
-            mesh.SetNormals(_normals);
-            mesh.SetUVs(0, _uvs);
-            mesh.SetTriangles(_triangles, 0);
+            mesh.SetVertices(vertices);
+            mesh.SetNormals(normals);
+            mesh.SetUVs(0, uvs);
+            mesh.SetTriangles(triangles, 0);
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
 

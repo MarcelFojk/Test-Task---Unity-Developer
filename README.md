@@ -107,6 +107,8 @@
 
 2. Open the project in **Unity 2022.3.38f1**.
 
+3. Open the **ARScene** scene located in ```./Assets/Scenes```
+
 3. No XR device is required — MRTK3 provides full simulation via keyboard and mouse.
 
 4. Play the main scene and use simulated input to test AR behaviors.
