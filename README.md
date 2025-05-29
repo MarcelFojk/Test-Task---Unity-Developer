@@ -106,6 +106,8 @@ The project is based on a **component-driven architecture**, aligning with Unity
   - `SolverHandler` (for target tracking and offset).
   - `Follow` component (for position tracking).
 
+![Follow](ReadmeMedia/Follow.gif)
+
 #### Interactive Attractors
 
 - Used `ObjectManipulator` for hands-on interaction.
