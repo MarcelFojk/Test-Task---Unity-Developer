@@ -29,19 +29,14 @@
   x = A * sin(a * t + δ)
   y = B * sin(b * t)
   ```
-![Lissajous Curve Animation code](ReadmeMedia/LissajousAnimation.png)
 
 - Parameters vary per object, giving the appearance of random, non-repeating motion.
 - Curve parameters are periodically randomized and transitioned smoothly via `Mathf.Lerp()` to enhance aperiodicity.
-
-![Random parameters code](ReadmeMedia/LissajousAnimation_code.png)
 
 ### 3. Object Rotation
 
 - Object A dynamically rotates to face Object B using a fixed angular speed.
 - Additionally, Object A orbits Object B in the XY plane for enhanced visual complexity.
-
-![Rotation code](ReadmeMedia/Rotation_code.png)
 
 ### 4. Dynamic Color Change
 
@@ -54,8 +49,6 @@
   Color.Lerp(blue, red, t);
   ```
 
-![Color trasition ShaderGraph](ReadmeMedia/ColorTransition.png)
-
 ### 5. Mesh Vertex Animation with Perlin Noise
 
 - Object A’s mesh is animated organically using Perlin noise.
@@ -63,8 +56,6 @@
 - Movement is centered around original vertex positions to maintain shape.
 
 ---
-
-![Vertex displacement ShaderGraph](ReadmeMedia/VertexDisplacement.png)
 
 ### Effect
 
@@ -87,8 +78,6 @@
   - `SolverHandler` (for target tracking and offset).
   - `Follow` component (for position tracking).
 
-![Follow component](ReadmeMedia/Follow.png)
-
 #### Interactive Attractors
 
 - Used `ObjectManipulator` for hands-on interaction.
@@ -96,16 +85,12 @@
   - Pause Lissajous movement and rotation on interaction.
   - Resume animations after the selection ends via the `selectExited` event.
 
-![AttractorLogic script](ReadmeMedia/AttractorLogic.png)
-
 #### Hand-Specific Interaction
 
 - Implemented `HandFilter` (based on `IXRSelectFilter`) to restrict:
   - **Object A** to the **right hand**.
   - **Object B** to the **left hand**.
 - Configured in the `ObjectManipulator > Starting Select Filters`.
-
-![HandFilter script](ReadmeMedia/HandFilter.png)
 
 ## Final Effect
 
