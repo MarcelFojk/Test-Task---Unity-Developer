@@ -5,6 +5,34 @@
 
 ---
 
+## 🛠️ Architecture
+
+The project is based on a **component-driven architecture**, aligning with Unity's best practices. Each object is composed of specialized, reusable components responsible for specific behaviors. This design provides:
+
+* **Modularity** – Clear separation of responsibilities.
+* **Scalability** – Easy to extend functionality without altering core systems.
+* **Maintainability** – Clean, testable, and easy-to-understand code structure.
+
+### Core Components
+
+* **`ObjectA`**: The main controller/aggregator. It manages the object's lifecycle, initializes the mesh, updates animations, and coordinates sub-components. It does not contain the core logic of movement, rotation, or visual feedback itself. Instead, it references and orchestrates separate MonoBehaviour components to handle those responsibilities.
+
+  * It calls update methods on its components every frame.
+  * It enables or disables behaviors such as animation depending on the state or interaction.
+
+* **`RotationComponent`**: Handles rotation animation around its own axis and around a center point. Rotation can be toggled on or off from `ObjectA`.
+
+* **`LissajousComponent`**: Implements movement along a Lissajous curve. It exposes an update method which is driven externally by `ObjectA`.
+
+* **`ShaderComponent`**: Manages color transitions and vertex displacement through runtime manipulation of materials. Driven by `ObjectA` to ensure visual updates are in sync with other behaviors.
+
+* **`MeshGenerator`**: A static utility class that generates procedural meshes, such as cube-spheres and torus, based on resolution and scale.
+
+### Interfaces
+
+* **`IObject`**: Provides a unified way to control object movement (e.g., `SetActiveAnimation`). Used by external systems such as XR interaction without depending on specific implementation details. This helps decouple the interaction logic from specific implementations like `ObjectA`.
+
+
 ## 🚀 Features
 
 ### 1. Procedural Mesh Creation
@@ -109,8 +137,14 @@
 
 3. Open the **ARScene** scene located in ```./Assets/Scenes```
 
-3. No XR device is required — MRTK3 provides full simulation via keyboard and mouse.
+4. No XR device is required — MRTK3 provides full simulation via keyboard and mouse.
 
-4. Play the main scene and use simulated input to test AR behaviors.
+5. Run Unitty Editor and use simulated input to test AR behaviors.
 
 ---
+
+## Known issues
+
+![Issue](ReadmeMedia/Issue.png)
+
+If this error appears then in Unity Editor you have to navigate to Edit -> Project Settings -> MRTK3 and then close the window. The problem should be fixed.
